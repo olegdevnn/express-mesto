@@ -2,15 +2,17 @@
   "name": "express-mesto",
   "version": "1.0.0",
   "description": "Проект Место (React + NodeJS)",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon --experimental-modules app.js",
+    "dev": "node --inspect --experimental-modules app.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/olegdevnn/express-mesto.git"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",

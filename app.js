@@ -1,8 +1,9 @@
+import routerUsers from './routes/users.js';
+import routerCards from './routes/cards.js';
+
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const routerCards = require('./routes/cards');
-const routerUsers = require('./routes/users');
 
 const { PORT = 3000 } = process.env;
 

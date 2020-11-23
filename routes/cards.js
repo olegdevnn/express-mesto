@@ -1,5 +1,6 @@
+import readFile from '../files/read-file.js';
+
 const router = require('express').Router();
-const { readFile } = require('../files/read-file');
 
 router.get('/', (req, res) => {
   // подготовка к запросам бд
@@ -12,4 +13,4 @@ router.get('/', (req, res) => {
     });
 });
 
-module.exports = router;
+export default router;
