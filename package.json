@@ -2,16 +2,17 @@
   "name": "express-mesto",
   "version": "1.0.0",
   "description": "Проект Место (React + NodeJS)",
-  "main": "app.mjs",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=production node --experimental-modules --es-module-specifier-resolution=node app.mjs",
-    "dev": "NODE_ENV=development nodemon --inspect --experimental-modules --es-module-specifier-resolution=node app.mjs"
+    "start": "NODE_ENV=production node --experimental-modules --es-module-specifier-resolution=node app.js",
+    "dev": "NODE_ENV=development nodemon --inspect --experimental-modules --es-module-specifier-resolution=node app.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/olegdevnn/express-mesto.git"
   },
+  "type": "module",
   "keywords": [],
   "author": {
     "name": "Oleg Zvonilov",

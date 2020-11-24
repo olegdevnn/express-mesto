@@ -4,6 +4,14 @@ module.exports = {
     es2021: true,
     node: true,
   },
+  settings: {
+    'import/extensions': ['.mjs', '.js'],
+    'import/resolver': {
+      node: {
+        extensions: ['.mjs', '.js'],
+      },
+    },
+  },
   extends: ['airbnb-base'],
   plugins: ['prettier'],
   parserOptions: {
