@@ -2,27 +2,28 @@
   "name": "express-mesto",
   "version": "1.0.0",
   "description": "Проект Место (React + NodeJS)",
-  "main": "app.js",
+  "main": "app.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --experimental-modules app.js",
-    "dev": "node --inspect --experimental-modules app.js"
+    "start": "NODE_ENV=production node --experimental-modules --es-module-specifier-resolution=node app.mjs",
+    "dev": "NODE_ENV=development nodemon --inspect --experimental-modules --es-module-specifier-resolution=node app.mjs"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/olegdevnn/express-mesto.git"
   },
-  "type": "module",
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": {
+    "name": "Oleg Zvonilov",
+    "email": "oleg.zvonilov@yandex.ru"
+  },
+  "private": true,
   "bugs": {
     "url": "https://github.com/olegdevnn/express-mesto/issues"
   },
   "homepage": "https://github.com/olegdevnn/express-mesto#readme",
   "dependencies": {
-    "express": "^4.17.1",
-    "body-parser": "^1.19.0"
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "eslint": "^7.14.0",

@@ -5,11 +5,12 @@ module.exports = {
     node: true,
   },
   extends: ['airbnb-base'],
+  plugins: ['prettier'],
   parserOptions: {
     ecmaVersion: 12,
     sourceType: 'module',
   },
   rules: {
-    'no-underscore-dangle': ['error', { allow: ['_id'] }],
+    'no-underscore-dangle': ['error', { allow: ['_id', '__dirname'] }],
   },
 };
