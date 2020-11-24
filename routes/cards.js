@@ -8,7 +8,9 @@ const router = express.Router();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 router.get('/', (req, res) => {
-  const readStream = fs.createReadStream(join(__dirname, '..', 'data', 'cards.json'));
+  const readStream = fs.createReadStream(
+    join(__dirname, '..', 'data', 'cards.json'),
+  );
 
   readStream.on('open', () => {
     readStream.pipe(res);

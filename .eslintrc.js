@@ -5,15 +5,14 @@ module.exports = {
     node: true,
   },
   settings: {
-    'import/extensions': ['.mjs', '.js'],
+    'import/extensions': ['.mjs', '.js', '.cjs'],
     'import/resolver': {
       node: {
-        extensions: ['.mjs', '.js'],
+        extensions: ['.mjs', '.js', '.cjs'],
       },
     },
   },
   extends: ['airbnb-base'],
-  plugins: ['prettier'],
   parserOptions: {
     ecmaVersion: 12,
     sourceType: 'module',

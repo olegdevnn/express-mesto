@@ -6,13 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=production node --experimental-modules --es-module-specifier-resolution=node app.js",
-    "dev": "NODE_ENV=development nodemon --inspect --experimental-modules --es-module-specifier-resolution=node app.js"
+    "dev": "NODE_ENV=development nodemon --inspect --experimental-modules --es-module-specifier-resolution=node app.js",
+    "lint": "node_modules/.bin/eslint --ext=.js ./ --ignore-pattern \"public/\""
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/olegdevnn/express-mesto.git"
   },
-  "type": "module",
   "keywords": [],
   "author": {
     "name": "Oleg Zvonilov",
