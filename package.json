@@ -13,6 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/olegdevnn/express-mesto.git"
   },
+  "type": "module",
   "keywords": [],
   "author": {
     "name": "Oleg Zvonilov",
