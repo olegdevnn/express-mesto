@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { validatorUrl } from '../units/validators';
+import validatorUrl from '../units/validators';
 
 const userSchema = new mongoose.Schema({
   name: {

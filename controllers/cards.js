@@ -28,11 +28,7 @@ const createCard = async (req, res) => {
     return res.send({ data: card });
   } catch (err) {
     if (err.name === 'ValidationError') {
-      err.message &&
-        res.status(ERROR_CODE_BAD_REQUEST).send({ message: err.message });
-      return res
-        .status(ERROR_CODE_BAD_REQUEST)
-        .send({ message: 'Переданы некорректные данные' });
+      return res.status(ERROR_CODE_BAD_REQUEST).send({ message: err.message });
     }
     return res
       .status(ERROR_CODE_INTERNAL_SERVER_ERROR)
@@ -40,18 +36,15 @@ const createCard = async (req, res) => {
   }
 };
 
-const deleteCard = (req, res) => {
-  Card.findByIdAndRemove(req.params.id, {
-    new: true,
-  }).then((card) =>
-    res
-      .send({ data: card })
-      .catch((err) =>
-        res
-          .status(ERROR_CODE_INTERNAL_SERVER_ERROR)
-          .send({ message: 'Произошла ошибка' })
-      )
-  );
+const deleteCard = async (req, res) => {
+  try {
+    const card = await Card.findByIdAndRemove(req.params.id);
+    return res.send({ data: card });
+  } catch (err) {
+    return res
+      .status(ERROR_CODE_INTERNAL_SERVER_ERROR)
+      .send({ message: 'Произошла ошибка' });
+  }
 };
 
 const addLikeCard = async (req, res) => {
@@ -81,7 +74,7 @@ const addLikeCard = async (req, res) => {
 
 const deleteLikeCard = async (req, res) => {
   const { user } = req;
-
+  console.log(req.params.cardId);
   try {
     const card = await Card.findByIdAndUpdate(
       req.params.cardId,
@@ -91,6 +84,7 @@ const deleteLikeCard = async (req, res) => {
         runValidators: true,
       }
     ).exec();
+    console.log(card);
     if (!card) {
       return res
         .status(ERROR_CODE_RESOURCE_NOT_FOUND)

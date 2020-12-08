@@ -20,16 +20,19 @@ const createUser = async (req, res) => {
   const { name, about, avatar } = req.body;
 
   try {
-    const user = await User.create({ name, about, avatar }).exec();
+    const user = await User.create({ name, about, avatar });
     return res.send({ data: user });
   } catch (err) {
+    if (err.name === 'ValidationError') {
+      return res.status(ERROR_CODE_BAD_REQUEST).send({ message: err.message });
+    }
     return res
       .status(ERROR_CODE_INTERNAL_SERVER_ERROR)
       .send({ message: 'Произошла ошибка' });
   }
 };
 
-const getUser = async (req, res, next) => {
+const getUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.userId).exec();
     if (!user) {
@@ -66,11 +69,7 @@ const editUser = async (req, res) => {
     return res.send({ data: user });
   } catch (err) {
     if (err.name === 'ValidationError') {
-      err.message &&
-        res.status(ERROR_CODE_BAD_REQUEST).send({ message: err.message });
-      return res
-        .status(ERROR_CODE_BAD_REQUEST)
-        .send({ message: 'Переданы некорректные данные' });
+      return res.status(ERROR_CODE_BAD_REQUEST).send({ message: err.message });
     }
     return res
       .status(ERROR_CODE_INTERNAL_SERVER_ERROR)
@@ -99,11 +98,7 @@ const editAvatarUser = async (req, res) => {
     return res.send({ data: user });
   } catch (err) {
     if (err.name === 'ValidationError') {
-      err.message &&
-        res.status(ERROR_CODE_BAD_REQUEST).send({ message: err.message });
-      return res
-        .status(ERROR_CODE_BAD_REQUEST)
-        .send({ message: 'Переданы некорректные данные' });
+      return res.status(ERROR_CODE_BAD_REQUEST).send({ message: err.message });
     }
     return res
       .status(ERROR_CODE_INTERNAL_SERVER_ERROR)

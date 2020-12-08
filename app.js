@@ -1,8 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
 import usersRouter from './routes/users';
 import cardsRouter from './routes/cards';
 
@@ -26,15 +24,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
   req.user = {
-    _id: '5fcec0ec8eb76558685c50d6',
+    _id: '5fcf87d08c13a26698380afa',
   };
 
   next();
 });
 
-app.use(
-  express.static(join(dirname(fileURLToPath(import.meta.url)), 'public'))
-);
 app.use('/cards', cardsRouter);
 app.use('/users', usersRouter);
 app.use((req, res) => {
