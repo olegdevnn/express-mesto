@@ -49,8 +49,8 @@ app.use((err, req, res, next) => {
   }
 });
 
-// TODO: Для работы сервиса, нужно создать пользователя с _id (написан ниже)
-//  Иначе не будет работать /users/my, /users/my/avatar
+// TODO: Для работы сервиса, нужно создать пользователя с _id, который ниже
+//  Без него не будет работать /users/my, /users/my/avatar
 app.use((req, res, next) => {
   req.user = {
     _id: '5fcec0ec8eb76558685c50d6',
