@@ -1,24 +1,18 @@
 import express from 'express';
-import { createReadStream } from 'fs';
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
+import {
+  addLikeCard,
+  createCard,
+  deleteCard,
+  deleteLikeCard,
+  getCards,
+} from '../controllers/cards';
 
 const router = express.Router();
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-router.get('/', (req, res) => {
-  const readStream = createReadStream(
-    join(__dirname, '..', 'data', 'cards.json'),
-  );
-
-  readStream.on('open', () => {
-    readStream.pipe(res);
-  });
-
-  readStream.on('error', () => {
-    res.status(500).send({ message: 'Ошибка сервера' });
-  });
-});
+router.get('/', getCards);
+router.post('/', createCard);
+router.delete('/:cardId', deleteCard);
+router.put('/:cardId/likes', addLikeCard);
+router.delete('/:cardId/likes', deleteLikeCard);
 
 export default router;

@@ -1,7 +1,7 @@
 {
   "env": {
     "browser": true,
-    "es2021": true,
+    "es6": true,
     "node": true
   },
   "settings": {
@@ -13,29 +13,45 @@
     "import/resolver": {
       "node": {
         "extensions": [
-          ".mjs",
-          ".js",
-          ".cjs"
+          ".js"
         ]
       }
     }
   },
   "extends": [
-    "airbnb-base"
+    "airbnb-base",
+    "prettier",
+    "plugin:node/recommended"
   ],
   "parserOptions": {
-    "ecmaVersion": 12,
+    "ecmaVersion": 22,
     "sourceType": "module"
   },
+  "plugins": [
+    "prettier"
+  ],
   "rules": {
     "no-underscore-dangle": [
       "error",
       {
         "allow": [
-          "_id",
-          "__dirname"
+          "_id"
         ]
       }
-    ]
+    ],
+    "prettier/prettier": "error",
+    "arrow-parens": "off",
+    "comma-dangle": "off",
+    "require-jsdoc": "off",
+    "object-curly-spacing": "off",
+    "operator-linebreak": "off",
+    "no-console": "off"
+
+    //    "no-unused-vars": "warn",
+    //    "no-console": "off",
+    //    "func-names": "off",
+    //    "no-process-exit": "off",
+    //    "object-shorthand": "off",
+    //    "class-methods-use-this": "off"
   }
 }
