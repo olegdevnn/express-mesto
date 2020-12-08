@@ -46,12 +46,5 @@
     "object-curly-spacing": "off",
     "operator-linebreak": "off",
     "no-console": "off"
-
-    //    "no-unused-vars": "warn",
-    //    "no-console": "off",
-    //    "func-names": "off",
-    //    "no-process-exit": "off",
-    //    "object-shorthand": "off",
-    //    "class-methods-use-this": "off"
   }
 }
