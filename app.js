@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import usersRouter from './routes/users';
 import cardsRouter from './routes/cards';
+import { ERROR_CODE_RESOURCE_NOT_FOUND } from './units/errorsCode';
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -33,7 +34,9 @@ app.use((req, res, next) => {
 app.use('/cards', cardsRouter);
 app.use('/users', usersRouter);
 app.use((req, res) => {
-  res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
+  res
+    .status(ERROR_CODE_RESOURCE_NOT_FOUND)
+    .send({ message: 'Запрашиваемый ресурс не найден' });
 });
 
 app.listen(PORT);

@@ -10,8 +10,8 @@ import {
 const router = express.Router();
 
 router.get('/', getUsers);
-router.get('/:userId', getUser);
 router.post('/', createUser);
+router.get('/:userId', getUser);
 router.patch('/me', editUser);
 router.patch('/me/avatar', editAvatarUser);
 

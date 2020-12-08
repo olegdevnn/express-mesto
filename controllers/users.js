@@ -33,8 +33,10 @@ const createUser = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
+  const { userId } = req.params;
+
   try {
-    const user = await User.findById(req.params.userId).exec();
+    const user = await User.findById(userId).exec();
     if (!user) {
       return res
         .status(ERROR_CODE_RESOURCE_NOT_FOUND)
@@ -61,6 +63,7 @@ const editUser = async (req, res) => {
         runValidators: true,
       }
     ).exec();
+
     if (!user) {
       return res
         .status(ERROR_CODE_RESOURCE_NOT_FOUND)
@@ -90,6 +93,7 @@ const editAvatarUser = async (req, res) => {
         runValidators: true,
       }
     ).exec();
+
     if (!user) {
       return res
         .status(ERROR_CODE_RESOURCE_NOT_FOUND)

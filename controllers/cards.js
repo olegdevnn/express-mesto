@@ -19,6 +19,7 @@ const getCards = async (req, res) => {
 const createCard = async (req, res) => {
   const { name, link } = req.body;
   const { user } = req;
+
   try {
     const card = await Card.create({
       name,
@@ -49,16 +50,18 @@ const deleteCard = async (req, res) => {
 
 const addLikeCard = async (req, res) => {
   const { user } = req;
+  const { cardId } = req.params;
 
   try {
     const card = await Card.findByIdAndUpdate(
-      req.params.cardId,
+      cardId,
       { $addToSet: { likes: user._id } },
       {
         new: true,
         runValidators: true,
       }
     ).exec();
+
     if (!card) {
       return res
         .status(ERROR_CODE_RESOURCE_NOT_FOUND)
@@ -74,17 +77,18 @@ const addLikeCard = async (req, res) => {
 
 const deleteLikeCard = async (req, res) => {
   const { user } = req;
-  console.log(req.params.cardId);
+  const { cardId } = req.params;
+
   try {
     const card = await Card.findByIdAndUpdate(
-      req.params.cardId,
+      cardId,
       { $pull: { likes: user._id } },
       {
         new: true,
         runValidators: true,
       }
     ).exec();
-    console.log(card);
+
     if (!card) {
       return res
         .status(ERROR_CODE_RESOURCE_NOT_FOUND)
