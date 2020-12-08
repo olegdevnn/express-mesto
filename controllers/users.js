@@ -1,56 +1,43 @@
 import User from '../models/user';
-import {
-  ERROR_CODE_BAD_REQUEST,
-  ERROR_CODE_INTERNAL_SERVER_ERROR,
-  ERROR_CODE_RESOURCE_NOT_FOUND,
-} from '../units/errorsCode';
+import { ERROR_NOT_FOUND } from '../units/errorsCode';
 
-const getUsers = async (req, res) => {
+const getUsers = async (req, res, next) => {
   try {
     const users = await User.find({}).populate('cards').exec();
     return res.send({ data: users });
   } catch (err) {
-    return res
-      .status(ERROR_CODE_INTERNAL_SERVER_ERROR)
-      .send({ message: 'Произошла ошибка' });
+    return next(err);
   }
 };
 
-const createUser = async (req, res) => {
+const createUser = async (req, res, next) => {
   const { name, about, avatar } = req.body;
 
   try {
     const user = await User.create({ name, about, avatar });
     return res.send({ data: user });
   } catch (err) {
-    if (err.name === 'ValidationError') {
-      return res.status(ERROR_CODE_BAD_REQUEST).send({ message: err.message });
-    }
-    return res
-      .status(ERROR_CODE_INTERNAL_SERVER_ERROR)
-      .send({ message: 'Произошла ошибка' });
+    return next(err);
   }
 };
 
-const getUser = async (req, res) => {
+const getUser = async (req, res, next) => {
   const { userId } = req.params;
 
   try {
     const user = await User.findById(userId).exec();
     if (!user) {
-      return res
-        .status(ERROR_CODE_RESOURCE_NOT_FOUND)
-        .send({ message: 'Нет пользователя с таким id' });
+      const err = new Error('Нет пользователя с таким id');
+      err.status = 404;
+      return next(err);
     }
     return res.send({ data: user });
   } catch (err) {
-    return res
-      .status(ERROR_CODE_INTERNAL_SERVER_ERROR)
-      .send({ message: 'Произошла ошибка' });
+    return next(err);
   }
 };
 
-const editUser = async (req, res) => {
+const editUser = async (req, res, next) => {
   const { _id } = req.user;
   const { name, about } = req.body;
 
@@ -61,26 +48,21 @@ const editUser = async (req, res) => {
       {
         new: true,
         runValidators: true,
-      }
+      },
     ).exec();
 
     if (!user) {
-      return res
-        .status(ERROR_CODE_RESOURCE_NOT_FOUND)
-        .send({ message: 'Нет пользователя с таким id' });
+      const err = new Error('Нет пользователя с таким id');
+      err.status = ERROR_NOT_FOUND;
+      return next(err);
     }
     return res.send({ data: user });
   } catch (err) {
-    if (err.name === 'ValidationError') {
-      return res.status(ERROR_CODE_BAD_REQUEST).send({ message: err.message });
-    }
-    return res
-      .status(ERROR_CODE_INTERNAL_SERVER_ERROR)
-      .send({ message: 'Произошла ошибка' });
+    return next(err);
   }
 };
 
-const editAvatarUser = async (req, res) => {
+const editAvatarUser = async (req, res, next) => {
   const { _id } = req.user;
   const { avatar } = req.body;
 
@@ -91,23 +73,20 @@ const editAvatarUser = async (req, res) => {
       {
         new: true,
         runValidators: true,
-      }
+      },
     ).exec();
 
     if (!user) {
-      return res
-        .status(ERROR_CODE_RESOURCE_NOT_FOUND)
-        .send({ message: 'Нет пользователя с таким id' });
+      const err = new Error('Нет пользователя с таким id');
+      err.status = ERROR_NOT_FOUND;
+      return next(err);
     }
     return res.send({ data: user });
   } catch (err) {
-    if (err.name === 'ValidationError') {
-      return res.status(ERROR_CODE_BAD_REQUEST).send({ message: err.message });
-    }
-    return res
-      .status(ERROR_CODE_INTERNAL_SERVER_ERROR)
-      .send({ message: 'Произошла ошибка' });
+    return next(err);
   }
 };
 
-export { getUsers, createUser, getUser, editUser, editAvatarUser };
+export {
+  getUsers, createUser, getUser, editUser, editAvatarUser,
+};

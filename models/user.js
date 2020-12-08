@@ -4,22 +4,22 @@ import validatorUrl from '../units/validators';
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
-    minLength: 2,
-    maxlength: 30,
+    required: [true, 'Поле \'name\' обязательное для заполнения'],
+    minlength: [2, 'Поле \'name\' должно быть минимум 2 знака'],
+    maxlength: [30, 'Поле \'name\' должно быть не более 30 знаков'],
   },
   about: {
     type: String,
-    required: true,
-    minLength: 2,
-    maxlength: 30,
+    required: [true, 'Поле \'avatar\' обязательное для заполнения'],
+    minlength: [2, 'Поле \'avatar\' должно быть минимум 2 знака'],
+    maxlength: [30, 'Поле \'avatar\' должно быть не более 30 знаков'],
   },
   avatar: {
     type: String,
-    required: [true, 'Поле ссылка обязательное для заполнения'],
+    required: [true, 'Поле \'avatar\' обязательное для заполнения'],
     validate: {
       validator: validatorUrl,
-      message: 'Указан не верный URL',
+      message: 'В поле \'avatar\' не указан верный URL',
     },
   },
 });

@@ -1,22 +1,16 @@
 import Card from '../models/card';
-import {
-  ERROR_CODE_BAD_REQUEST,
-  ERROR_CODE_INTERNAL_SERVER_ERROR,
-  ERROR_CODE_RESOURCE_NOT_FOUND,
-} from '../units/errorsCode';
+import { ERROR_NOT_FOUND } from '../units/errorsCode';
 
-const getCards = async (req, res) => {
+const getCards = async (req, res, next) => {
   try {
     const cards = await Card.find({}).populate('likes').exec();
     return res.send({ data: cards });
   } catch (err) {
-    return res
-      .status(ERROR_CODE_INTERNAL_SERVER_ERROR)
-      .send({ message: 'Произошла ошибка' });
+    return next(err);
   }
 };
 
-const createCard = async (req, res) => {
+const createCard = async (req, res, next) => {
   const { name, link } = req.body;
   const { user } = req;
 
@@ -28,27 +22,27 @@ const createCard = async (req, res) => {
     });
     return res.send({ data: card });
   } catch (err) {
-    if (err.name === 'ValidationError') {
-      return res.status(ERROR_CODE_BAD_REQUEST).send({ message: err.message });
-    }
-    return res
-      .status(ERROR_CODE_INTERNAL_SERVER_ERROR)
-      .send({ message: 'Произошла ошибка' });
+    return next(err);
   }
 };
 
-const deleteCard = async (req, res) => {
+const deleteCard = async (req, res, next) => {
+  const { cardId } = req.params;
+
   try {
-    const card = await Card.findByIdAndRemove(req.params.id);
+    const card = await Card.findByIdAndRemove(cardId);
+    if (!card) {
+      const err = new Error('Карточка не найдена');
+      err.status = ERROR_NOT_FOUND;
+      return next(err);
+    }
     return res.send({ data: card });
   } catch (err) {
-    return res
-      .status(ERROR_CODE_INTERNAL_SERVER_ERROR)
-      .send({ message: 'Произошла ошибка' });
+    return next(err);
   }
 };
 
-const addLikeCard = async (req, res) => {
+const addLikeCard = async (req, res, next) => {
   const { user } = req;
   const { cardId } = req.params;
 
@@ -59,23 +53,21 @@ const addLikeCard = async (req, res) => {
       {
         new: true,
         runValidators: true,
-      }
+      },
     ).exec();
 
     if (!card) {
-      return res
-        .status(ERROR_CODE_RESOURCE_NOT_FOUND)
-        .send({ message: 'Карточка не найдена' });
+      const err = new Error('Карточка не найдена');
+      err.status = ERROR_NOT_FOUND;
+      return next(err);
     }
     return res.send({ data: card });
   } catch (err) {
-    return res
-      .status(ERROR_CODE_INTERNAL_SERVER_ERROR)
-      .send({ message: 'Произошла ошибка' });
+    return next(err);
   }
 };
 
-const deleteLikeCard = async (req, res) => {
+const deleteLikeCard = async (req, res, next) => {
   const { user } = req;
   const { cardId } = req.params;
 
@@ -86,20 +78,20 @@ const deleteLikeCard = async (req, res) => {
       {
         new: true,
         runValidators: true,
-      }
+      },
     ).exec();
 
     if (!card) {
-      return res
-        .status(ERROR_CODE_RESOURCE_NOT_FOUND)
-        .send({ message: 'Карточка не найдена' });
+      const err = new Error('Карточка не найдена');
+      err.status = ERROR_NOT_FOUND;
+      return next(err);
     }
     return res.send({ data: card });
   } catch (err) {
-    return res
-      .status(ERROR_CODE_INTERNAL_SERVER_ERROR)
-      .send({ message: 'Произошла ошибка' });
+    return next(err);
   }
 };
 
-export { getCards, createCard, deleteCard, addLikeCard, deleteLikeCard };
+export {
+  getCards, createCard, deleteCard, addLikeCard, deleteLikeCard,
+};

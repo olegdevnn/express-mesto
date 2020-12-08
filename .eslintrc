@@ -6,9 +6,7 @@
   },
   "settings": {
     "import/extensions": [
-      ".mjs",
-      ".js",
-      ".cjs"
+      ".js"
     ],
     "import/resolver": {
       "node": {
@@ -19,17 +17,12 @@
     }
   },
   "extends": [
-    "airbnb-base",
-    "prettier",
-    "plugin:node/recommended"
+    "airbnb-base"
   ],
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": [
-    "prettier"
-  ],
   "rules": {
     "no-underscore-dangle": [
       "error",
@@ -38,13 +31,6 @@
           "_id"
         ]
       }
-    ],
-    "prettier/prettier": "error",
-    "arrow-parens": "off",
-    "comma-dangle": "off",
-    "require-jsdoc": "off",
-    "object-curly-spacing": "off",
-    "operator-linebreak": "off",
-    "no-console": "off"
+    ]
   }
 }
